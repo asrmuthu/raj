@@ -3,11 +3,25 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const httpLink = new HttpLink({
+  uri: 'https://graphqlzero.almansi.me/api'
+});
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache()
+});
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client ={client}>
+     <App />
+    </ApolloProvider>
   </React.StrictMode>
 );
 
